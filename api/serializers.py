@@ -79,6 +79,6 @@ class CartSerializer(serializers.ModelSerializer):
     fields = "__all__"
 
   def get_product(self,cart):
-    product = Product.objects.get(id = cart.product)
+    product = Product.objects.get(id = cart.product.id)
     serializer = ProductSerializer(product,many = False)
     return serializer.data
