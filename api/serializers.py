@@ -72,6 +72,13 @@ class AdminOrderSerializer(serializers.ModelSerializer):
     fields = ["datetime","quantity","product"]
 
 class CartSerializer(serializers.ModelSerializer):
+  product = serializers.SerializerMethodField('get_product')
+
   class Meta:
     model = Cart
     fields = "__all__"
+
+  def get_product(self,cart):
+    product = Product.objects.get(id = cart.product)
+    serializer = ProductSerializer(product,many = False)
+    return serializer.data
