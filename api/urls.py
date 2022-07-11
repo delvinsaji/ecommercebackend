@@ -24,8 +24,6 @@ urlpatterns = [
   #pk1 - Ascending or Descending
   #pk2 - page number
   #pk3 - Search varaible
-  path("pricesort/<str:pk1>/<str:pk2>/",views.sort_by_price,name = "Price Sort"),
-  path("datetimesort/<str:pk1>/<str:pk2>/",views.sort_by_datetime,name = "Time Sort"),
   path("spricesort/<str:pk1>/<str:pk2>/<str:pk3>/",views.ssort_by_price,name = "Search Price Sort"),
   path("sdatetimesort/<str:pk1>/<str:pk2>/<str:pk3>/",views.ssort_by_datetime,name = "Search Time Sort"),
 

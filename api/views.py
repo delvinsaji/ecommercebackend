@@ -57,35 +57,15 @@ def search(request):
 
 
 @api_view(['GET'])
-def sort_by_price(request,pk1,pk2):
-  if pk1 == '0':
-    product = Product.objects.order_by('price')[((int(pk2) - 1)* 8):(int(pk2)*8)]
-  else:
-    product = Product.objects.order_by('-price')[((int(pk2) - 1)* 8):(int(pk2)*8)]
-  serializer = AllProductSerializer(product,many = True)
-  return Response(serializer.data)
-
-@api_view(['GET'])
-def sort_by_datetime(request,pk1,pk2):
-  if pk1 == '0':
-    product = Product.objects.order_by('datetime')[((int(pk2) - 1)* 8):(int(pk2)*8)]
-  else:
-    product = Product.objects.order_by('-datetime')[((int(pk2) - 1)* 8):(int(pk2)*8)]
-  serializer = AllProductSerializer(product,many = True)
-  return Response(serializer.data)
-
-
-
-@api_view(['GET'])
 def ssort_by_price(request,pk1,pk2,pk3):
   if pk1 == '0':
     try:
-      product = Product.objects.filter(Q(name__icontains = pk3) | Q(category = Category.objects.get(category = pk3.capitalize()))).order_by('price')[((int(pk2) - 1)* 8):(int(pk2)*8)]
+      product = Product.objects.filter(Q(name__icontains = pk3) | Q(category = Category.objects.get(category = pk3.capitalize()))).order_by('price')[((int(pk2) - 1)* 20):(int(pk2)*20)]
     except:
       product = Product.objects.filter(name__icontains = pk3)
   else:
     try:
-      product = Product.objects.filter(Q(name__icontains = pk3) | Q(category = Category.objects.get(category = pk3.capitalize()))).order_by('-price')[((int(pk2) - 1)* 8):(int(pk2)*8)]
+      product = Product.objects.filter(Q(name__icontains = pk3) | Q(category = Category.objects.get(category = pk3.capitalize()))).order_by('-price')[((int(pk2) - 1)* 20):(int(pk2)*20)]
     except:
       product = Product.objects.filter(name__icontains = pk3)
   serializer = AllProductSerializer(product,many = True)
@@ -96,12 +76,12 @@ def ssort_by_price(request,pk1,pk2,pk3):
 def ssort_by_datetime(request,pk1,pk2,pk3):
   if pk1 == '0':
     try:
-      product = Product.objects.filter(Q(name__icontains = pk3) | Q(category = Category.objects.get(category = pk3.capitalize()))).order_by('datetime')[((int(pk2) - 1)* 8):(int(pk2)*8)]
+      product = Product.objects.filter(Q(name__icontains = pk3) | Q(category = Category.objects.get(category = pk3.capitalize()))).order_by('datetime')[((int(pk2) - 1)* 20):(int(pk2)*20)]
     except:
       product = Product.objects.filter(name__icontains = pk3)
   else:
     try:
-      product = Product.objects.filter(Q(name__icontains = pk3) | Q(category = Category.objects.get(category = pk3.capitalize()))).order_by('-datetime')[((int(pk2) - 1)* 8):(int(pk2)*8)]
+      product = Product.objects.filter(Q(name__icontains = pk3) | Q(category = Category.objects.get(category = pk3.capitalize()))).order_by('-datetime')[((int(pk2) - 1)* 20):(int(pk2)*20)]
     except:
       product = Product.objects.filter(name__icontains = pk3)
   serializer = AllProductSerializer(product,many = True)
