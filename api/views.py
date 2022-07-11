@@ -50,7 +50,7 @@ def search(request):
   try:
     product = Product.objects.filter(Q(name__icontains = s) | Q(category = Category.objects.get(category = pk1.capitalize())))[(((int(p)) - 1)* 8):(int(p)*8)]
   except:
-    product = Product.objects.filter(name__icontains = s)[(((int(p)) - 1)* 8):(int(p)*8)]
+    product = Product.objects.filter(name__icontains = s)[(((int(p)) - 1)* 20):(int(p)*20)]
   serializer = AllProductSerializer(product,many  = True)
   return Response(serializer.data)
 
