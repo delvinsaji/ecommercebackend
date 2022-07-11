@@ -60,7 +60,7 @@ def add_review(request):
     product = Product.objects.get(id = r['id'])
     user = User.objects.select_for_update().get(username = r['username'])
     try:
-      review = Review.objects.get(user = user)
+      review = Review.objects.get(user = user,product = product)
       return Response("Review already exists")
     except:
       review = Review.objects.create(product=product,rating = r['rating'],user = user,desc = r['description'])
