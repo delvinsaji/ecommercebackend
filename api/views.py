@@ -62,12 +62,12 @@ def ssort_by_price(request,pk1,pk2,pk3):
     try:
       product = Product.objects.filter(Q(name__icontains = pk3) | Q(category = Category.objects.get(category = pk3.capitalize()))).order_by('price')[((int(pk2) - 1)* 20):(int(pk2)*20)]
     except:
-      product = Product.objects.filter(name__icontains = pk3)
+      product = Product.objects.filter(name__icontains = pk3).order_by('price')[((int(pk2) - 1)* 20):(int(pk2)*20)]
   else:
     try:
       product = Product.objects.filter(Q(name__icontains = pk3) | Q(category = Category.objects.get(category = pk3.capitalize()))).order_by('-price')[((int(pk2) - 1)* 20):(int(pk2)*20)]
     except:
-      product = Product.objects.filter(name__icontains = pk3)
+      product = Product.objects.filter(name__icontains = pk3).order_by('-price')[((int(pk2) - 1)* 20):(int(pk2)*20)]
   serializer = AllProductSerializer(product,many = True)
   return Response(serializer.data)
 
