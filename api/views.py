@@ -99,7 +99,8 @@ def recommended_products(request,username,pk):
   try:
     most_visited = visited_count[0]
     category = most_visited['category']
-    product = Product.objects.filter(category = category)[((int(pk2) - 1)* 8):(int(pk2)*8)]
+    catob = Category.objects.get(id=category)
+    product = Product.objects.filter(category = catob)[((int(pk) - 1)* 8):(int(pk)*8)]
     serializer = AllProductSerializer(product,many = True)
   except:
     return Response(False)
