@@ -43,9 +43,16 @@ class AddressSerializer(serializers.ModelSerializer):
     model = Address
     fields = "__all__"
 
+class OrderSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Orders
+    fields = "__all__"
+
 class ProfileSerializer(serializers.ModelSerializer):
   products = serializers.SerializerMethodField('get_products')
   addresses = serializers.SerializerMethodField("get_addresses")
+  user = serializers.SerializerMethodField("get_username")
+  orders = serializers.SerializerMethodField("get_orders")
 
   class Meta:
     model = Profile
@@ -61,10 +68,15 @@ class ProfileSerializer(serializers.ModelSerializer):
     serializer = AddressSerializer(address,many = True)
     return serializer.data
 
-class OrderSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = Orders
-    fields = "__all__"
+  def get_username(self,profile):
+    user = profile.user
+    serializer = UserSerializer(user,many = False)
+    return serializer.data
+
+  def get_orders(self,profile):
+    orders = Orders.objects.filter(user = profile.user).order_by('datetime')
+    serializer = OrderSerializer(orders,many = True)
+    return serializer.data
 
 class AdminOrderSerializer(serializers.ModelSerializer):
   class Meta:
