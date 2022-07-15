@@ -36,6 +36,13 @@ def create_profile(request):
 def update_profile(request,username):
   request = request.data
 
+  if request['username'] != username:
+    try:
+      exist = User.objects.get(username = request['username'])
+      return Response("username already exists")
+    except:
+      user.username = request['username']
+      user.save()
 
   user = User.objects.get(username = username)
   profile = Profile.objects.get(user = user)
@@ -44,14 +51,6 @@ def update_profile(request,username):
   profile.email = request['email']
   profile.age = request['age']
   profile.save()
-
-  if request['username'] != username:
-    try:
-      exist = User.objects.get(username = request['username'])
-      return Response("username already exists")
-    except:
-      user.username = request['username']
-      user.save()
 
   return Response("Successfully updated")
 
