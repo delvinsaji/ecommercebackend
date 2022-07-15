@@ -45,12 +45,13 @@ def update_profile(request,username):
   profile.age = request['age']
   profile.save()
 
-  try:
-    exist = user.objects.get(username = request['username'])
-    return Response("username already exists")
-  except:
-    user.username = request['username']
-    user.save()
+  if request['username'] != username:
+    try:
+      exist = User.objects.get(username = request['username'])
+      return Response("username already exists")
+    except:
+      user.username = request['username']
+      user.save()
 
   return Response("Successfully updated")
 
