@@ -32,6 +32,7 @@ urlpatterns = [
   
   path("createprofile/",profileviews.create_profile,name = "Create Profile"),
   path("updateprofile/<str:username>/",profileviews.update_profile,name = "Update Profile"),
+  path("updatepassword/<str:username>/",profileviews.update_password,name = "Update Password"),
   path("getprofile/<str:username>/",profileviews.get_profile,name = "Get Profile"),
   path("addaddress/<str:username>/",profileviews.add_address,name = "Add Address"),
   path("getaddress/<str:username>/",profileviews.get_addresses,name = "Get Address"),
