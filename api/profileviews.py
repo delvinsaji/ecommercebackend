@@ -33,10 +33,11 @@ def create_profile(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def update_profile(request):
+def update_profile(request,username):
   request = request.data
 
-  user = User.objects.get(username = request['username'])
+
+  user = User.objects.get(username = username)
   profile = Profile.objects.get(user = user)
 
   profile.name = request['name']
@@ -44,11 +45,29 @@ def update_profile(request):
   profile.age = request['age']
   profile.save()
 
-  if request['password'] != "":
-    user.set_password = request['password']
+  try:
+    exist = user.objects.get(username = request['username'])
+    return Response("username already exists")
+  except:
+    user.username = request['username']
+    user.save()
 
   return Response("Successfully updated")
 
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_password(request,username):
+  r = request.data
+
+  user = User.objects.get(username = username)
+
+  if user.check_password(r['old_password']):
+    user.set_password(r['new_password'])
+    user.save()
+  else:
+    return Response("The password entered is incorrect")
+  return Response("Password changed")
 
 
 @api_view(['GET'])
