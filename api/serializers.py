@@ -43,10 +43,23 @@ class AddressSerializer(serializers.ModelSerializer):
     model = Address
     fields = "__all__"
 
+class Product1Serializer(serializers.ModelSerializer):
+  class Meta:
+    model = Product
+    fields = "__all__"
+
+
 class OrderSerializer(serializers.ModelSerializer):
+  products = serializers.SerializerMethodField("get_products")
+
   class Meta:
     model = Orders
     fields = "__all__"
+
+  def get_products(self,orders):
+    product = Product.objects.get(id = orders.products)
+    serializer = Product1Serializer(product,many = False)
+    return serializer.data
 
 class ProfileSerializer(serializers.ModelSerializer):
   products = serializers.SerializerMethodField('get_products')
