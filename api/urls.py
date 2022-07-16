@@ -40,7 +40,7 @@ urlpatterns = [
   path("deleteaddress/<str:pk>/",profileviews.delete_address,name = "Delete Address"),
 
   path("addproduct/",productviews.add_product,name = "Add Product"),
-  path("updateproduct/",productviews.update_product,name = "Update Product"),
+  path("updateproduct/<str:pk>/",productviews.update_product,name = "Update Product"),
   #pk - Product ID
   path("deleteproduct/<str:pk>/",productviews.delete_product,name = "Delete product"),
 
