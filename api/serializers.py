@@ -57,7 +57,7 @@ class OrderSerializer(serializers.ModelSerializer):
     fields = "__all__"
 
   def get_products(self,orders):
-    product = Product.objects.get(id = orders.products)
+    product = Product.objects.get(id = orders.product)
     serializer = Product1Serializer(product,many = False)
     return serializer.data
 
