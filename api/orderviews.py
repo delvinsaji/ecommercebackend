@@ -57,7 +57,12 @@ def add_cart(request):
   r = request.data
   user = User.objects.get(username = r['username'])
   product = Product.objects.get(id = r['product'])
-
+  try:
+    cart = Cart.objects.get(product = product)
+    return Response("The item is already in cart")
+  except:
+    pass
+  
   cart = Cart.objects.create(user = user,product = product,quantity = r['quantity'])
   cart.save()
 
