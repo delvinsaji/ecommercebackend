@@ -85,5 +85,12 @@ def delete_cart(request):
 def get_cart(request,pk):
   user = User.objects.get(username = pk)
   cart = Cart.objects.filter(user = user)
+  da = {"price":0,"quantity":0}
+  for items in cart:
+    da['price'] += items.product.price * items.quantity
+    da['quantity'] += items.quantity
+
+
   serializer = CartSerializer(cart,many = True)
-  return Response(serializer.data)
+  da.update(serializer.data)
+  return Response(da)
