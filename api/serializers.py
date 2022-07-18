@@ -98,6 +98,7 @@ class AdminOrderSerializer(serializers.ModelSerializer):
 
 class CartSerializer(serializers.ModelSerializer):
   product = serializers.SerializerMethodField('get_product')
+  price = serializers.SerializerMethodField("get_price")
 
   class Meta:
     model = Cart
@@ -107,3 +108,10 @@ class CartSerializer(serializers.ModelSerializer):
     product = Product.objects.get(id = cart.product.id)
     serializer = ProductSerializer(product,many = False)
     return serializer.data
+
+  def get_price(self,cart):
+    carts = Cart.objects.filter(product = cart.product)
+    price = 0
+    for items in carts:
+      price += cart.product.price * cart.quantity
+    return price
