@@ -92,5 +92,6 @@ def get_cart(request,pk):
 
 
   serializer = CartSerializer(cart,many = True)
-  da.update(serializer.data)
-  return Response(da)
+  li = list(serializer.data)
+  li.append(da)
+  return Response(li)
