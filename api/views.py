@@ -31,13 +31,14 @@ def get_product(request,pk):
     else:
       visited = Visited.objects.create(user = User.objects.get(username = request.user),product= product,category=product.category)
     visited.save()
+  print(product.datetime)
   serializer = ProductSerializer(product,many = False)
   return Response(serializer.data)
 
 
 @api_view(['GET'])
 def top_five(request):
-  sorted_product = Product.objects.order_by("datetime")[:5]
+  sorted_product = Product.objects.order_by("-datetime")[:5]
   serializer = AllProductSerializer(sorted_product,many = True)
   return Response(serializer.data)
 
